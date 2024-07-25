@@ -1,0 +1,57 @@
+Las imagenes estan formadas por pixeles que se agrupan en una especie de lista/tabla, es decir, dependiendo del tipo de imagen,
+podemos obtener una estructura u otra en funcion de la gama de colores:
+
+R==filas
+C=columnas
+
+RGB = (R,C,3), En OpenCV estos estan invertidos serian BGR
+Grises = (R,C)
+
+Estructura RGB
+    Las estructuras de imagenes con color funcionan de la siguiente manera:
+        Las imagenes estan formadas por filas y dentro de estas estan las columnas, esas columnas pueden tener valores entre 0:255
+        Es decir teniendo en cuenta esto podemos modificar las imagenes sabiendo las escalas de esta, con la funcion
+        nombre_img.shape() nos devolvera el numero de filas y columna de una foto, y un tercer valor donde nos indica la escala de
+        colores que se esta utilizando en las imagenes en caso de no devolverlo se deduce que es una imagen en escala de grises
+
+    A nivel de programacion podemos comprender las estructuras a modo de listas anidadas:
+
+        FILAS[0][
+            COLUMNAS[0][
+                [0:255][0:255][0:255]      
+                ]            
+            ]
+
+    En el ejemplo de arriba podemos comprender que estamos seleccionando la FILA[0] despues unicamente la COLUMNA[0] y dentros de
+    estas podemos encontrar tres valores entre 0:255 donde unicamente estamos representando el primer pixel de la imagen, si los
+    valores son [0][0][0] = negro [255][255][255]=blanco.
+    
+    En el siguiente ejemplo seleccionamos una imagen, al saber la cantidad de filas y columnas que posee le estoy indicando que
+    me modifique unicamete todas las filas hasta la 700 y todas las columnas, sustitullendo los valores RGB por cualquiera 
+    aleatorien gracias a la libreria random, recalcar que en OpenCV son BGR.
+
+        import cv2
+        import random
+
+        img2 = cv2.imread('galeria/persona.jpg',-1)
+
+        for i in range(700):
+            for j in range(img2.shape[1]):
+                img2[i][j] = [random.randint(0,255) ,random.randint(0,255), random.randint(0,255)]
+
+        cv2.imshow('Modificada',img2)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+
+    Tambien podemos seleccionar X seccion de la imagen a modo de lista donde en el siguiente ejemplo seleccionamos las filas de
+    la 0 a la 600 y las columnas de la 400 a la 1000, esa seleccion la podemos alamacenar en otra variable y despues volver a 
+    imprimirla pero solo se imprimira la seleccion almacenada en esta, es decir habremos recortado la foto. 
+
+
+        face = img2[0:600, 400:1000]
+        img2[50:650, 400:1000] = face
+
+        cv2.imshow('Modificada',img2)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
