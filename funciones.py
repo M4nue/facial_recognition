@@ -18,6 +18,29 @@ def ABRIR_CAMARA(camara):
     cap.release()
     cv2.destroyWindow()
 
+def ABRIR_CAMARA_FILTRO(camara):
+    cap = cv2.VideoCapture(camara) #DEFINIMOS LA CAMARA
+    
+    while True:
+        ret, frame = cap.read()
+        width = int(cap.get(3))
+        eight = int(cap.get(4))
+        
+        hvs = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) #FILTRO HVS
+
+        color_hsv_claro = np.array([0, 1, 1])   
+        color_hsv_oscuro = np.array([30, 255, 255])#ESTOS VALORES DEBEN SER AJUSTADOS A TU ENTORNO EN FORMATO HSV
+ 
+        mascara = cv2.inRange(hvs,color_hsv_claro,color_hsv_oscuro) #CREACION DE MASCARA SOBRE EL FILTRO
+
+        resultado_img_mascara = cv2.bitwise_and(frame, frame, mask=mascara)
+
+        cv2.imshow('IG: manuel_rc12', resultado_img_mascara)
+        if cv2.waitKey(1) == ord('q'):
+            break
+
+
+
 
 
 
