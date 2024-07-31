@@ -51,10 +51,28 @@ def ABRIR_CAMARA(camara):
         if cv2.waitKey(1) == ord('q'):
             break
 
-ABRIR_CAMARA(0)
+
+def SEGIMIENTO_FACIAL():
+    cap = cv2.VideoCapture(0)
+    img_BW = cv2.imread('./galeria/Usuario.jpg',0)
+    faces = haar_cascade.detectMultiScale(
+    gray_img, scaleFactor=1.05, minNeighbors=2, minSize=(100, 100)
+)
 
 
 
+def HACER_FOTO():
+    cap = cv2.VideoCapture(0)
 
+    while True:
+        ret, frame = cap.read()
+        cv2.imshow('IG: manuel_rc12', frame)
+        if cv2.waitKey(1)  == ord('q'):
+            cv2.imwrite('./galeria/Usuario.jpg',frame)
+            img_BW=cv2.imread('./galeria/Usuario.jpg', 0)
+            cv2.imwrite('./galeria/Usuario.jpg',img_BW)
+            break
+    cap.release()
+    cv2.destroyAllWindows()
 
 
