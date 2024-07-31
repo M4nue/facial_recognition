@@ -40,6 +40,20 @@ def ABRIR_CAMARA_FILTRO(camara):
             break
 
 
+def HACER_FOTO():
+    cap = cv2.VideoCapture(0)
+
+    while True:
+        ret, frame = cap.read()
+        cv2.imshow('IG: manuel_rc12', frame)
+        if cv2.waitKey(1)  == ord('q'):
+            cv2.imwrite('./galeria/Usuario.jpg',frame) #Guardamos la imagen del frame
+            img_BW=cv2.imread('./galeria/Usuario.jpg', 0)# La cargamos en blanco y negro
+            cv2.imwrite('./galeria/Usuario.jpg',img_BW)# La sobrescribimos para guardarla con el filtro
+            break
+    cap.release()
+    cv2.destroyAllWindows()
+
 
 
 
